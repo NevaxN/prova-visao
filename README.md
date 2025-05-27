@@ -23,7 +23,7 @@ Problema 1:
 3° Etapa: Aplicação do filtro Gaussiano.
 
 4° Etapa: Equalização de histograma.
--------------------------------------------------------------------------------
+
 Problema 2:
 1° Etapa: Normalização dos testes e treinos.
 
