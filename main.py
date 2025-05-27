@@ -73,7 +73,6 @@ for i in range(len(imagens_originais)):
     plt.show()
 
 """-- Parte 2 --"""
-
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from sklearn.metrics import classification_report
@@ -94,18 +93,18 @@ def filtrar_cats_dogs(X, y):
 
 X, y = filtrar_cats_dogs(X_full, y_full)
 
-X_redim = np.array([cv2.resize(img, (128, 128)) for img in X])
-X_redim = X_redim.astype('float32') / 255.0
+# Normalização (sem redimensionar, CIFAR-10 já é 32x32)
+X = X.astype('float32') / 255.0
 
-X_train, X_test, y_train, y_test = train_test_split(X_redim, y, test_size=0.2, random_state=42)
+# Dividir em treino/teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Modelo CNN
 model = models.Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(128, 128, 3)),
+    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)),
     layers.MaxPooling2D((2, 2)),
     layers.Conv2D(64, (3, 3), activation='relu'),
     layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(128, (3, 3), activation='relu'),
     layers.Flatten(),
     layers.Dense(64, activation='relu'),
     layers.Dense(1, activation='sigmoid')
@@ -115,7 +114,8 @@ model.compile(optimizer='adam',
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-history = model.fit(X_train, y_train, epochs=10, validation_data=(X_test, y_test))
+# Treinamento mais rápido
+history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
 
 # Avaliação
 y_pred_probs = model.predict(X_test)
@@ -140,7 +140,7 @@ for nome_arquivo in os.listdir(pasta_imagens):
             continue
         
         img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-        img_redim = cv2.resize(img_rgb, (128, 128))
+        img_redim = cv2.resize(img_rgb, (32, 32))
         img_input = img_redim.astype('float32') / 255.0
         img_input = np.expand_dims(img_input, axis=0)
         
