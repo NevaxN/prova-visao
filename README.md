@@ -47,19 +47,24 @@ Problema 2:
 
 R:
 
-Acurácia no conjunto de teste: 
+Relatório tirado do terminal após execução:
 
-Precision: 
+Relatório de Classificação:
 
-Recall: 
+              precision    recall  f1-score   support
 
-F1-score: 
+        Gato       0.72      0.76      0.74      1003
+    Cachorro       0.74      0.70      0.72       997
+
+    accuracy                           0.73      2000
+   macro avg       0.73      0.73      0.73      2000
+weighted avg       0.73      0.73      0.73      2000
 
 5 - Tempo Total Gasto
 
 R:
 
-Aproximadamente  horas (divida o tempo estimado em: coleta de imagens, pré-processamento, modelagem e testes).
+Aproximadamente 1 hora e 25 minutos.
 
 6 - Dificuldades Encontradas
 
